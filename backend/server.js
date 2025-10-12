@@ -17,8 +17,11 @@ app.use(cors({
     'http://127.0.0.1:5173',
     'https://cabmate-finder.vercel.app',
     'https://cabmate-finder-5903ni1yg-nikhilvitcs-projects.vercel.app',
+    'https://cabmate-finder-jjlnlklcx-nikhilvitcs-projects.vercel.app',
     'https://cabmate-finder-*.vercel.app',
-    'https://*.vercel.app'
+    'https://*.vercel.app',
+    'https://cabpool.vhelpcc.com',
+    'https://*.vhelpcc.com'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
