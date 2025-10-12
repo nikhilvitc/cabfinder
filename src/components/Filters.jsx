@@ -37,6 +37,13 @@ const Filters = ({ filters, onFilterChange, travelData = [] }) => {
             Clear All
           </button>
           <button 
+            onClick={() => setIsExpanded(false)} 
+            className="close-btn"
+            style={{ display: isExpanded ? 'block' : 'none' }}
+          >
+            ✕
+          </button>
+          <button 
             onClick={() => setIsExpanded(!isExpanded)} 
             className="mobile-toggle-btn"
             style={{ display: 'none' }}
@@ -47,38 +54,40 @@ const Filters = ({ filters, onFilterChange, travelData = [] }) => {
       </div>
 
       <div className={`filter-content ${isExpanded ? 'expanded' : ''}`}>
-        <div className="filter-group">
-          <label>Search</label>
-          <input
-            type="text"
-            placeholder="Search by name, place, or contact..."
-            value={filters?.search || ''}
-            onChange={handleSearchChange}
-          />
-        </div>
+        <div className="filter-row">
+          <div className="filter-group">
+            <label>Search</label>
+            <input
+              type="text"
+              placeholder="Search by name, place, or contact..."
+              value={filters?.search || ''}
+              onChange={handleSearchChange}
+            />
+          </div>
 
-        <div className="filter-group">
-          <label>Travel Date</label>
-          <select value={filters?.date || ''} onChange={handleDateChange}>
-            <option value="">All Dates</option>
-            {uniqueDates.map(date => (
-              <option key={date} value={date}>
-                {date}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className="filter-group">
+            <label>Travel Date</label>
+            <select value={filters?.date || ''} onChange={handleDateChange}>
+              <option value="">All Dates</option>
+              {uniqueDates.map(date => (
+                <option key={date} value={date}>
+                  {date}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="filter-group">
-          <label>Destination</label>
-          <select value={filters?.destination || ''} onChange={handleDestinationChange}>
-            <option value="">All Destinations</option>
-            {uniqueDestinations.map(destination => (
-              <option key={destination} value={destination}>
-                {destination}
-              </option>
-            ))}
-          </select>
+          <div className="filter-group">
+            <label>Destination</label>
+            <select value={filters?.destination || ''} onChange={handleDestinationChange}>
+              <option value="">All Destinations</option>
+              {uniqueDestinations.map(destination => (
+                <option key={destination} value={destination}>
+                  {destination}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div style={{ marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '0.375rem' }}>

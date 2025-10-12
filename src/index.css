@@ -452,8 +452,16 @@ html {
   top: 2rem;
 }
 
+.filter-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 .filter-group {
   margin-bottom: 1.5rem;
+  flex: 1;
+  min-width: 200px;
 }
 
 .filter-group label {
@@ -501,6 +509,27 @@ html {
 .clear-btn:disabled {
   background: #9ca3af;
   cursor: not-allowed;
+}
+
+.close-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.close-btn:hover {
+  background: #dc2626;
 }
 
 /* Table Component */
@@ -827,6 +856,16 @@ html {
   .filters {
     padding: 0.75rem;
     margin-bottom: 1rem;
+  }
+  
+  .filter-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .filter-group {
+    margin-bottom: 0.75rem;
+    min-width: auto;
   }
   
   .filters input,
