@@ -27,7 +27,9 @@ function App() {
     try {
       setLoading(true)
       setError(null)
-      const response = await axios.get('http://localhost:3001/api/travel-data')
+      // Use relative URL for production (same domain), localhost for development
+      const apiUrl = import.meta.env.DEV ? 'http://localhost:3001' : '';
+      const response = await axios.get(`${apiUrl}/api/travel-data`)
       
       // Ensure response.data is an array
       const data = Array.isArray(response.data?.data) ? response.data.data : []
@@ -77,22 +79,41 @@ function App() {
   useEffect(() => {
     // Ensure travelData is an array
     const safeTravelData = Array.isArray(travelData) ? travelData : []
-    let filtered = safeTravelData
+    
+    // Remove duplicates based on name, date, and place
+    const uniqueData = safeTravelData.reduce((acc, person) => {
+      const key = `${person.name}-${person.travelDate}-${person.place}`
+      if (!acc.find(p => `${p.name}-${p.travelDate}-${p.place}` === key)) {
+        acc.push(person)
+      }
+      return acc
+    }, [])
+    
+    let filtered = [...uniqueData] // Create a copy to avoid mutation
 
-    if (filters.search) {
-      const searchLower = filters.search.toLowerCase()
-      filtered = filtered.filter(person =>
-        person.name.toLowerCase().includes(searchLower) ||
-        person.place.toLowerCase().includes(searchLower) ||
-        person.contact.toLowerCase().includes(searchLower)
-      )
+    // Apply search filter
+    if (filters.search && filters.search.trim()) {
+      const searchLower = filters.search.toLowerCase().trim()
+      filtered = filtered.filter(person => {
+        const name = (person.name || '').toLowerCase()
+        const place = (person.place || '').toLowerCase()
+        const contact = (person.contact || '').toLowerCase()
+        const flightTrain = (person.flightTrainNumber || '').toLowerCase()
+        
+        return name.includes(searchLower) ||
+               place.includes(searchLower) ||
+               contact.includes(searchLower) ||
+               flightTrain.includes(searchLower)
+      })
     }
 
-    if (filters.date) {
+    // Apply date filter
+    if (filters.date && filters.date.trim()) {
       filtered = filtered.filter(person => person.travelDate === filters.date)
     }
 
-    if (filters.destination) {
+    // Apply destination filter
+    if (filters.destination && filters.destination.trim()) {
       filtered = filtered.filter(person => person.place === filters.destination)
     }
 
@@ -110,6 +131,11 @@ function App() {
     const userDate = user.travelDate
     const userPlace = user.place
 
+    // Helper function to check if time is empty/invalid
+    const isEmptyTime = (time) => {
+      return !time || time.trim() === '' || time === 'N/A' || time === 'Not specified'
+    }
+
     const compatiblePartners = safeTravelData.filter(person => {
       // Don't include the user themselves
       if (person.id === user.id) return false
@@ -117,17 +143,35 @@ function App() {
       // Must be same destination and date
       if (person.place !== userPlace || person.travelDate !== userDate) return false
       
-      // Time compatibility: within -2 hours to +1 hour
+      const userTimeEmpty = isEmptyTime(userTime)
+      const partnerTimeEmpty = isEmptyTime(person.departureTime)
+      
+      // If both have no departure time, they're compatible (flexible matching)
+      if (userTimeEmpty && partnerTimeEmpty) {
+        return true
+      }
+      
+      // If one has time and other doesn't, they're still compatible (flexible matching)
+      if (userTimeEmpty || partnerTimeEmpty) {
+        return true
+      }
+      
+      // Time compatibility: within -2 hours to +1 hour (only if both have valid times)
       try {
         const userMoment = moment(userTime, 'HH:mm:ss')
         const partnerMoment = moment(person.departureTime, 'HH:mm:ss')
-        const diffMinutes = partnerMoment.diff(userMoment, 'minutes')
         
+        // Check if moments are valid
+        if (!userMoment.isValid() || !partnerMoment.isValid()) {
+          return false // If time parsing fails, don't consider them compatible
+        }
+        
+        const diffMinutes = partnerMoment.diff(userMoment, 'minutes')
         return diffMinutes >= -120 && diffMinutes <= 60
       } catch {
-        return false
+        return false // If any error occurs, don't consider them compatible
       }
-    })
+    }).slice(0, 3) // Limit to first 3 partners for better UX
 
     setPartners(compatiblePartners)
     setIsModalOpen(true)
@@ -142,7 +186,13 @@ function App() {
 
   // Handle filter changes
   const handleFilterChange = (newFilters) => {
-    setFilters(prev => ({ ...prev, ...newFilters }))
+    setFilters(prev => {
+      const updated = { ...prev }
+      Object.keys(newFilters).forEach(key => {
+        updated[key] = newFilters[key]
+      })
+      return updated
+    })
   }
 
   // Refresh data

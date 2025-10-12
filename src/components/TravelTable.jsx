@@ -57,16 +57,35 @@ const TravelTable = ({ data = [], onFindPartners, selectedUser }) => {
                     padding: '0.25rem 0.5rem', 
                     borderRadius: '0.25rem', 
                     fontSize: '0.75rem',
-                    fontWeight: '500'
+                    fontWeight: '500',
+                    display: 'inline-block'
                   }}>
                     {person.travelDate}
                   </span>
                 </td>
                 <td>
-                  <div style={{ fontWeight: '500' }}>{person.departureTime}</div>
+                  <div style={{ fontWeight: '500' }}>
+                    {person.departureTime && person.departureTime.trim() !== '' ? (
+                      <span style={{ 
+                        background: '#f0f9ff', 
+                        color: '#0369a1', 
+                        padding: '0.25rem 0.5rem', 
+                        borderRadius: '0.25rem', 
+                        fontSize: '0.75rem',
+                        fontWeight: '500',
+                        display: 'inline-block'
+                      }}>
+                        {person.departureTime}
+                      </span>
+                    ) : (
+                      <span style={{ color: '#9ca3af', fontStyle: 'italic', fontSize: '0.875rem' }}>
+                        Flexible
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td>
-                  <div style={{ maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {person.place}
                   </div>
                 </td>

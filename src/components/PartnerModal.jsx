@@ -5,7 +5,7 @@ const PartnerModal = ({ isOpen, onClose, partners, selectedUser }) => {
   if (!isOpen || !selectedUser) return null
 
   const formatTime = (timeStr) => {
-    if (!timeStr) return 'N/A'
+    if (!timeStr || timeStr.trim() === '') return 'Flexible'
     try {
       return moment(timeStr, 'HH:mm:ss').format('h:mm A')
     } catch {
@@ -17,13 +17,19 @@ const PartnerModal = ({ isOpen, onClose, partners, selectedUser }) => {
     try {
       const user = moment(userTime, 'HH:mm:ss')
       const partner = moment(partnerTime, 'HH:mm:ss')
+      
+      // If either time is empty or invalid, consider them flexible
+      if (!user.isValid() || !partner.isValid()) {
+        return 'Flexible'
+      }
+      
       const diffMinutes = partner.diff(user, 'minutes')
       
       if (diffMinutes === 0) return 'Same time'
       if (diffMinutes > 0) return `+${diffMinutes} min`
       return `${diffMinutes} min`
     } catch {
-      return 'N/A'
+      return 'Flexible'
     }
   }
 
@@ -79,7 +85,7 @@ const PartnerModal = ({ isOpen, onClose, partners, selectedUser }) => {
               margin: 0,
               color: '#1f2937'
             }}>
-              🤲 U Help Cabpool - Travel Partners Found
+              V Help Cabpool
             </h2>
             <p style={{
               fontSize: '14px',
