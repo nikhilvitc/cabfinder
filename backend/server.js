@@ -158,6 +158,15 @@ async function fetchTravelData() {
 
 // API Routes
 
+// Health check endpoint to keep free instance alive
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'healthy', 
+    timestamp: new Date().toISOString(),
+    records: travelData.length 
+  });
+});
+
 // Get all travel data
 app.get('/api/travel-data', async (req, res) => {
   try {
