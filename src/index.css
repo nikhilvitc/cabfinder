@@ -745,11 +745,12 @@ html {
     font-size: 0.75rem;
   }
   
-  /* Mobile header buttons - much smaller */
+  /* Mobile header buttons - keep horizontal */
   .header-content > div:last-child {
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.5rem;
-    align-items: stretch;
+    align-items: center;
+    flex-wrap: wrap;
   }
   
   .header-content > div:last-child > div {
@@ -924,7 +925,14 @@ html {
     font-size: 0.7rem;
   }
   
-  /* Extra small mobile header buttons */
+  /* Extra small mobile header buttons - keep horizontal */
+  .header-content > div:last-child {
+    flex-direction: row;
+    gap: 0.375rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
   .header-content > div:last-child > div {
     padding: 0.25rem 0.375rem;
     font-size: 0.7rem;
