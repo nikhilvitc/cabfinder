@@ -26,7 +26,12 @@ const TravelTable = ({ data = [], onFindPartners, selectedUser }) => {
         <p>Click "Find Partner" to discover people traveling to the same destination</p>
       </div>
       
-      <div style={{ overflowX: 'auto' }}>
+      <div style={{ 
+        overflowX: 'auto', 
+        WebkitOverflowScrolling: 'touch',
+        scrollbarWidth: 'thin',
+        scrollbarColor: '#cbd5e1 #f1f5f9'
+      }}>
         <table className="table">
           <thead>
             <tr>
@@ -48,7 +53,14 @@ const TravelTable = ({ data = [], onFindPartners, selectedUser }) => {
                   <div style={{ fontWeight: '500' }}>{person.name}</div>
                 </td>
                 <td>
-                  <div style={{ fontFamily: 'monospace', fontSize: '0.875rem' }}>{person.contact}</div>
+                  <div style={{ 
+                    fontFamily: 'monospace', 
+                    fontSize: '0.875rem',
+                    wordBreak: 'break-all',
+                    maxWidth: '120px',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}>{person.contact}</div>
                 </td>
                 <td>
                   <span style={{ 
