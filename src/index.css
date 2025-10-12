@@ -18,8 +18,9 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  position: relative;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 
 #root {
@@ -509,6 +510,20 @@ html {
   overflow: hidden;
 }
 
+.table-scroll-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  position: relative;
+  width: 100%;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.table-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
 .table-header {
   padding: 1.5rem;
   border-bottom: 1px solid #e5e7eb;
@@ -719,10 +734,23 @@ html {
     white-space: nowrap;
   }
   
-  /* Make table scrollable horizontally */
+  /* Make table scrollable horizontally - iOS Safari fix */
   .table-container > div {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .table-container > div::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Ensure smooth scrolling on iOS */
+  .table-container {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
   }
   
   /* Mobile-specific table adjustments */
