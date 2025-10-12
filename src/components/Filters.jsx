@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Filters = ({ filters, onFilterChange, travelData = [] }) => {
+  const [isExpanded, setIsExpanded] = useState(false)
+  
   // Ensure travelData is always an array
   const safeTravelData = Array.isArray(travelData) ? travelData : []
   
@@ -30,55 +32,66 @@ const Filters = ({ filters, onFilterChange, travelData = [] }) => {
     <div className="filters">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         <h3>Filters</h3>
-        <button onClick={clearFilters} className="clear-btn" disabled={!hasActiveFilters}>
-          Clear All
-        </button>
-      </div>
-
-      <div className="filter-group">
-        <label>Search</label>
-        <input
-          type="text"
-          placeholder="Search by name, place, or contact..."
-          value={filters?.search || ''}
-          onChange={handleSearchChange}
-        />
-      </div>
-
-      <div className="filter-group">
-        <label>Travel Date</label>
-        <select value={filters?.date || ''} onChange={handleDateChange}>
-          <option value="">All Dates</option>
-          {uniqueDates.map(date => (
-            <option key={date} value={date}>
-              {date}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="filter-group">
-        <label>Destination</label>
-        <select value={filters?.destination || ''} onChange={handleDestinationChange}>
-          <option value="">All Destinations</option>
-          {uniqueDestinations.map(destination => (
-            <option key={destination} value={destination}>
-              {destination}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div style={{ marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '0.375rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: '0.875rem', fontWeight: '500', color: '#374151' }}>Total Records:</span>
-          <span style={{ fontSize: '1.25rem', fontWeight: '600', color: '#3b82f6' }}>{safeTravelData.length}</span>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <button onClick={clearFilters} className="clear-btn" disabled={!hasActiveFilters}>
+            Clear All
+          </button>
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)} 
+            className="mobile-toggle-btn"
+            style={{ display: 'none' }}
+          >
+            {isExpanded ? '−' : '+'}
+          </button>
         </div>
-        {hasActiveFilters && (
-          <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#6b7280' }}>
-            Filters active - showing refined results
+      </div>
+
+      <div className={`filter-content ${isExpanded ? 'expanded' : ''}`}>
+        <div className="filter-group">
+          <label>Search</label>
+          <input
+            type="text"
+            placeholder="Search by name, place, or contact..."
+            value={filters?.search || ''}
+            onChange={handleSearchChange}
+          />
+        </div>
+
+        <div className="filter-group">
+          <label>Travel Date</label>
+          <select value={filters?.date || ''} onChange={handleDateChange}>
+            <option value="">All Dates</option>
+            {uniqueDates.map(date => (
+              <option key={date} value={date}>
+                {date}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-group">
+          <label>Destination</label>
+          <select value={filters?.destination || ''} onChange={handleDestinationChange}>
+            <option value="">All Destinations</option>
+            {uniqueDestinations.map(destination => (
+              <option key={destination} value={destination}>
+                {destination}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div style={{ marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '0.375rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.875rem', fontWeight: '500', color: '#374151' }}>Total Records:</span>
+            <span style={{ fontSize: '1.25rem', fontWeight: '600', color: '#3b82f6' }}>{safeTravelData.length}</span>
           </div>
-        )}
+          {hasActiveFilters && (
+            <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#6b7280' }}>
+              Filters active - showing refined results
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
