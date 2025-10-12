@@ -27,8 +27,8 @@ function App() {
     try {
       setLoading(true)
       setError(null)
-      // Use relative URL for production (same domain), localhost for development
-      const apiUrl = import.meta.env.DEV ? 'http://localhost:3001' : '';
+      // Use deployed Render backend URL for production, localhost for development
+      const apiUrl = import.meta.env.DEV ? 'http://localhost:3001' : 'https://cabfinder.onrender.com';
       const response = await axios.get(`${apiUrl}/api/travel-data`)
       
       // Ensure response.data is an array
