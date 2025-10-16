@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 
 const Filters = ({ filters, onFilterChange, travelData = [] }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
-  
   // Ensure travelData is always an array
   const safeTravelData = Array.isArray(travelData) ? travelData : []
   
@@ -29,31 +27,23 @@ const Filters = ({ filters, onFilterChange, travelData = [] }) => {
   const hasActiveFilters = (filters?.search || filters?.date || filters?.destination) || false
 
   return (
-    <div className="filters">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h3>Filters</h3>
-        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+    <div className="filters" style={{ 
+      backgroundColor: 'white', 
+      padding: '1rem', 
+      borderRadius: '8px', 
+      marginBottom: '1rem',
+      border: '2px solid #3b82f6' // Blue border to make it very visible
+    }}>
+      <div className="filter-header">
+        <h3>🔍 Filters - Mobile Ready!</h3>
+        <div className="filter-actions">
           <button onClick={clearFilters} className="clear-btn" disabled={!hasActiveFilters}>
             Clear All
-          </button>
-          <button 
-            onClick={() => setIsExpanded(false)} 
-            className="close-btn"
-            style={{ display: isExpanded ? 'block' : 'none' }}
-          >
-            ✕
-          </button>
-          <button 
-            onClick={() => setIsExpanded(!isExpanded)} 
-            className="mobile-toggle-btn"
-            style={{ display: 'none' }}
-          >
-            {isExpanded ? '−' : '+'}
           </button>
         </div>
       </div>
 
-      <div className={`filter-content ${isExpanded ? 'expanded' : ''}`}>
+      <div className="filter-content" style={{ maxHeight: 'none', opacity: 1, overflow: 'visible' }}>
         <div className="filter-row">
           <div className="filter-group">
             <label>Search</label>

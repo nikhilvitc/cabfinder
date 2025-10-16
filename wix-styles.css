@@ -1,0 +1,497 @@
+/* Wix Velo CSS Styles for CabMate Finder */
+/* Add these styles to your Wix site's CSS section */
+
+/* Main container */
+.cabmate-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8fafc;
+    min-height: 100vh;
+}
+
+/* Header section */
+.header-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.header-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.header-info span {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Buttons */
+button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#refreshButton {
+    background: #10b981;
+}
+
+#refreshButton:hover {
+    background: #059669;
+}
+
+#clearFiltersButton {
+    background: #ef4444;
+}
+
+#clearFiltersButton:hover {
+    background: #dc2626;
+}
+
+#dismissError {
+    background: #6b7280;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Error message */
+.error-message {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Filters section */
+.filters-section {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.filters-section h3 {
+    margin: 0 0 20px 0;
+    color: #374151;
+    font-size: 1.5rem;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 20px;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.filter-group input,
+.filter-group select {
+    padding: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.filter-group input:focus,
+.filter-group select:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+/* Table container */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+    padding: 25px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.table-header h2 {
+    margin: 0 0 8px 0;
+    color: #374151;
+    font-size: 1.5rem;
+}
+
+.table-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Travel repeater */
+.travel-repeater {
+    padding: 20px;
+}
+
+.travel-repeater .repeater-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.travel-repeater .repeater-item:hover {
+    background: #f0f9ff;
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.travel-repeater .repeater-item .item-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr auto;
+    gap: 15px;
+    align-items: center;
+}
+
+.travel-repeater .repeater-item .item-field {
+    font-size: 14px;
+}
+
+.travel-repeater .repeater-item .item-field strong {
+    color: #374151;
+    font-weight: 600;
+}
+
+.travel-repeater .repeater-item .date-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.travel-repeater .repeater-item .time-badge {
+    background: #f0f9ff;
+    color: #0369a1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.travel-repeater .repeater-item .flexible-time {
+    color: #9ca3af;
+    font-style: italic;
+    font-size: 12px;
+}
+
+.travel-repeater .repeater-item .flight-number {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: #7c3aed;
+}
+
+.travel-repeater .repeater-item .not-specified {
+    color: #9ca3af;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #374151;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    padding: 25px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f9fafb;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #374151;
+    font-size: 1.5rem;
+}
+
+#closeModal {
+    background: #6b7280;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#closeModal:hover {
+    background: #4b5563;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.selected-user-info {
+    background: #f0f9ff;
+    border: 1px solid #bae6fd;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.selected-user-info h4 {
+    margin: 0 0 15px 0;
+    color: #0369a1;
+    font-size: 1.2rem;
+}
+
+.selected-user-info p {
+    margin: 8px 0;
+    color: #374151;
+    font-size: 14px;
+}
+
+/* Partners repeater */
+.partners-repeater .repeater-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: #fafafa;
+    transition: all 0.2s ease;
+}
+
+.partners-repeater .repeater-item:hover {
+    background: #f0fdf4;
+    border-color: #10b981;
+}
+
+.partners-repeater .repeater-item .partner-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+}
+
+.no-partners {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e5e7eb;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    color: #374151;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .cabmate-container {
+        padding: 10px;
+    }
+    
+    .header-section {
+        padding: 20px;
+    }
+    
+    .header-section h1 {
+        font-size: 2rem;
+    }
+    
+    .header-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .filter-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .travel-repeater .repeater-item .item-content {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .partners-repeater .repeater-item .partner-content {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+}
+
+/* Wix-specific adjustments */
+/* These styles work better with Wix's styling system */
+
+.wix-style {
+    /* Override Wix default styles if needed */
+}
+
+/* Ensure proper spacing in Wix */
+.wix-container {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Fix any Wix-specific layout issues */
+.wix-layout-fix {
+    box-sizing: border-box;
+}
+
+/* Custom button styles that work with Wix */
+.wix-button {
+    background: #3b82f6 !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+}
+
+.wix-button:hover {
+    background: #2563eb !important;
+    transform: translateY(-1px) !important;
+}
+
+

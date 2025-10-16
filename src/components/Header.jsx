@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from '../assets/logo.png'
+import perplxityImage from '../assets/perplxity.jpeg'
 
 const Header = ({ onRefresh, lastUpdate, dataCount }) => {
   const formatLastUpdate = (timestamp) => {
@@ -18,6 +19,14 @@ const Header = ({ onRefresh, lastUpdate, dataCount }) => {
 
   return (
     <header className="header">
+      {/* Perplexity Desktop Ad in Header */}
+      <div className="perplexity-header-ad">
+        <a href="https://pplx.ai/Vitcai" target="_blank" rel="noopener noreferrer">
+          <img src={perplxityImage} alt="Perplexity Ad" />
+          <div className="ad-label">Ad</div>
+        </a>
+      </div>
+      
       <div className="header-content">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
@@ -81,66 +90,31 @@ const Header = ({ onRefresh, lastUpdate, dataCount }) => {
           </p>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <div style={{ 
-            textAlign: 'center', 
-            background: 'rgba(255, 255, 255, 0.1)', 
-            padding: '0.75rem 1rem', 
-            borderRadius: '0.75rem',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#fbbf24' }}>{dataCount || 0}</div>
-            <div style={{ fontSize: '0.75rem', opacity: 0.9, fontWeight: '500' }}>Records</div>
+        <div className="header-stats-and-actions">
+          <div className="header-stats">
+            <div className="stat-card">
+              <div className="stat-number">{dataCount || 0}</div>
+              <div className="stat-label">Records</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">{formatLastUpdate(lastUpdate)}</div>
+              <div className="stat-label">Last Update</div>
+            </div>
           </div>
-          <div style={{ 
-            textAlign: 'center', 
-            background: 'rgba(255, 255, 255, 0.1)', 
-            padding: '0.75rem 1rem', 
-            borderRadius: '0.75rem',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            backdropFilter: 'blur(10px)'
-          }}>
-            <div style={{ fontSize: '1.1rem', fontWeight: '700', color: '#10b981' }}>{formatLastUpdate(lastUpdate)}</div>
-            <div style={{ fontSize: '0.75rem', opacity: 0.9, fontWeight: '500' }}>Last Update</div>
+          
+          <div className="header-actions">
+            <a
+              href="https://forms.gle/jZpA5Ej2QwCkMxD36"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="add-travel-btn"
+            >
+              📝 Add Travel
+            </a>
+            <button onClick={onRefresh} className="refresh-btn">
+              🔄 Refresh
+            </button>
           </div>
-          <a
-            href="https://forms.gle/jZpA5Ej2QwCkMxD36"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
-              border: '2px solid rgba(255, 255, 255, 0.2)',
-              color: 'white',
-              padding: '0.75rem 1.25rem',
-              borderRadius: '0.75rem',
-              fontWeight: '600',
-              textDecoration: 'none',
-              fontSize: '0.875rem',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-              transition: 'all 0.3s',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #1e293b 0%, #334155 100%)'
-              e.target.style.borderColor = 'rgba(255, 255, 255, 0.4)'
-              e.target.style.transform = 'translateY(-2px)'
-              e.target.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.4)'
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'
-              e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)'
-              e.target.style.transform = 'translateY(0)'
-              e.target.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)'
-            }}
-          >
-            📝 Add Travel
-          </a>
-          <button onClick={onRefresh} className="refresh-btn">
-            🔄 Refresh
-          </button>
         </div>
       </div>
     </header>

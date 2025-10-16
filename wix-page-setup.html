@@ -1,0 +1,91 @@
+<!-- Wix Page Structure Reference -->
+<!-- This shows the HTML structure you need to create in Wix Editor -->
+
+<div class="cabmate-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1 id="headerTitle">CabMate Finder</h1>
+    <div class="header-info">
+      <span id="recordCount">0 records</span>
+      <span id="lastUpdate">Last updated: Never</span>
+      <button id="refreshButton">Refresh</button>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div id="errorMessage" class="error-message" style="display: none;">
+    <span id="errorText"></span>
+    <button id="dismissError">Dismiss</button>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <h3>Filters</h3>
+    <div class="filter-row">
+      <div class="filter-group">
+        <label>Search</label>
+        <input id="searchInput" type="text" placeholder="Search by name, place, or contact...">
+      </div>
+      <div class="filter-group">
+        <label>Travel Date</label>
+        <select id="dateFilter">
+          <option value="">All Dates</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Destination</label>
+        <select id="destinationFilter">
+          <option value="">All Destinations</option>
+        </select>
+      </div>
+      <button id="clearFiltersButton">Clear All</button>
+    </div>
+  </div>
+
+  <!-- Travel Records Table -->
+  <div class="table-container">
+    <div class="table-header">
+      <h2 id="tableTitle">Travel Records (0)</h2>
+      <p>Click "Find Partner" to discover people traveling to the same destination</p>
+    </div>
+    
+    <!-- Wix Repeater for travel records -->
+    <div id="travelRepeater" class="travel-repeater">
+      <!-- Repeater items will be populated by Velo code -->
+    </div>
+    
+    <!-- Empty state -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+      <div class="empty-icon">🚗</div>
+      <h3>No records found</h3>
+      <p>Try adjusting your filters or refresh the data to see available travel options</p>
+    </div>
+  </div>
+
+  <!-- Partner Modal -->
+  <div id="partnerModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Travel Partners</h3>
+        <button id="closeModal">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="selectedUserInfo" class="selected-user"></div>
+        <div id="partnersRepeater" class="partners-repeater">
+          <!-- Partner items will be populated by Velo code -->
+        </div>
+        <div id="noPartnersMessage" class="no-partners" style="display: none;">
+          <p>No compatible travel partners found for this trip.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Spinner -->
+<div id="loadingSpinner" class="loading-spinner" style="display: none;">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading travel data...</div>
+</div>
+
+

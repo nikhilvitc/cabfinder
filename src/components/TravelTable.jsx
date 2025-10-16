@@ -5,7 +5,6 @@ const TravelTable = ({ data = [], onFindPartners, selectedUser }) => {
     return (
       <div className="table-container">
         <div className="table-header">
-          <h2>Travel Records</h2>
           <p>No travel records found. Try adjusting your filters or refresh the data.</p>
         </div>
         <div style={{ padding: '3rem', textAlign: 'center', color: '#6b7280' }}>
@@ -22,7 +21,6 @@ const TravelTable = ({ data = [], onFindPartners, selectedUser }) => {
   return (
     <div className="table-container">
       <div className="table-header">
-        <h2>Travel Records ({data.length})</h2>
         <p>Click "Find Partner" to discover people traveling to the same destination</p>
       </div>
       

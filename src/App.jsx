@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Header from './components/Header'
-import Filters from './components/Filters'
 import TravelTable from './components/TravelTable'
 import PartnerModal from './components/PartnerModal'
 import ErrorBoundary from './components/ErrorBoundary'
 import axios from 'axios'
 import moment from 'moment'
+import { Analytics } from '@vercel/analytics/react'
 
 function App() {
   const [travelData, setTravelData] = useState([])
@@ -241,11 +241,164 @@ function App() {
             </div>
           )}
 
-          <Filters 
-            filters={filters}
-            onFilterChange={handleFilterChange}
-            travelData={travelData}
-          />
+          {/* FILTERS - MATCHING WEBSITE THEME */}
+          <div style={{
+            background: 'white',
+            padding: '20px',
+            borderRadius: '12px',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            border: '1px solid #e5e7eb',
+            maxWidth: '600px',
+            margin: '16px auto'
+          }}>
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '20px',
+              fontSize: '18px',
+              fontWeight: '600',
+              color: '#1f2937'
+            }}>
+              Search & Filter Travel Partners
+            </div>
+            
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '16px'
+            }}>
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '8px',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  color: '#374151'
+                }}>
+                  Search
+                </label>
+                <input
+                  type="text"
+                  placeholder="Search by name, place, or contact..."
+                  value={filters?.search || ''}
+                  onChange={(e) => handleFilterChange({ search: e.target.value })}
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    fontSize: '16px',
+                    borderRadius: '8px',
+                    border: '2px solid #d1d5db',
+                    backgroundColor: 'white',
+                    color: '#1f2937',
+                    outline: 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#2563eb'
+                    e.target.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)'
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#d1d5db'
+                    e.target.style.boxShadow = 'none'
+                  }}
+                />
+              </div>
+              
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <div style={{ flex: '1', minWidth: '140px' }}>
+                  <label style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    color: '#374151'
+                  }}>
+                    Travel Date
+                  </label>
+                  <select
+                    value={filters?.date || ''}
+                    onChange={(e) => handleFilterChange({ date: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      fontSize: '16px',
+                      borderRadius: '8px',
+                      border: '2px solid #d1d5db',
+                      backgroundColor: 'white',
+                      color: '#1f2937',
+                      outline: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <option value="">All Dates</option>
+                    {[...new Set(travelData.map(item => item.travelDate))].sort().map(date => (
+                      <option key={date} value={date}>{date}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div style={{ flex: '1', minWidth: '140px' }}>
+                  <label style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    color: '#374151'
+                  }}>
+                    Destination
+                  </label>
+                  <select
+                    value={filters?.destination || ''}
+                    onChange={(e) => handleFilterChange({ destination: e.target.value })}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      fontSize: '16px',
+                      borderRadius: '8px',
+                      border: '2px solid #d1d5db',
+                      backgroundColor: 'white',
+                      color: '#1f2937',
+                      outline: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <option value="">All Destinations</option>
+                    {[...new Set(travelData.map(item => item.place))].sort().map(destination => (
+                      <option key={destination} value={destination}>{destination}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              
+              <button
+                onClick={() => handleFilterChange({ search: '', date: '', destination: '' })}
+                disabled={!filters?.search && !filters?.date && !filters?.destination}
+                style={{
+                  padding: '12px 24px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  opacity: (!filters?.search && !filters?.date && !filters?.destination) ? 0.5 : 1
+                }}
+                onMouseEnter={(e) => {
+                  if (filters?.search || filters?.date || filters?.destination) {
+                    e.target.style.transform = 'translateY(-2px)'
+                    e.target.style.boxShadow = '0 4px 12px rgba(15, 23, 42, 0.3)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)'
+                  e.target.style.boxShadow = 'none'
+                }}
+              >
+                Clear All Filters
+              </button>
+            </div>
+          </div>
 
           <div>
             <TravelTable 
@@ -263,6 +416,7 @@ function App() {
           selectedUser={selectedUser}
         />
       </div>
+      <Analytics />
     </ErrorBoundary>
   )
 }
