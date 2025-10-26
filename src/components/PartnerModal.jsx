@@ -97,7 +97,7 @@ const PartnerModal = ({ isOpen, onClose, partners, selectedUser }) => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <a
-              href="https://forms.gle/jZpA5Ej2QwCkMxD36"
+              href="https://forms.gle/ribwApJU9G4RA2Zh8"
               target="_blank"
               rel="noopener noreferrer"
               style={{
