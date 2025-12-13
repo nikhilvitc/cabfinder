@@ -104,7 +104,7 @@ const Header = ({ onRefresh, lastUpdate, dataCount }) => {
           
           <div className="header-actions">
             <a
-              href="https://forms.gle/jZpA5Ej2QwCkMxD36"
+              href="https://forms.gle/ribwApJU9G4RA2Zh8"
               target="_blank"
               rel="noopener noreferrer"
               className="add-travel-btn"
