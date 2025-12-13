@@ -43,41 +43,20 @@ const PartnerModal = ({ isOpen, onClose, partners = [], selectedUser, matchWindo
             <h2 style={{ margin: 0 }}>V Help Cabpool</h2>
             <p style={{ margin: 0, color: '#6b7280' }}>Matching travelers for {selectedUser.name}</p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <a
-              href="https://forms.gle/ribwApJU9G4RA2Zh8"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                backgroundColor: '#10b981',
-                color: 'white',
-                padding: '8px 12px',
-                borderRadius: '6px',
-                textDecoration: 'none',
-                fontSize: '14px',
-                fontWeight: '500',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
-            >
-              📝 Add Your Travel
-            </a>
-            <button
-              onClick={onClose}
-              style={{
-                background: 'none',
-                border: 'none',
-                fontSize: '24px',
-                cursor: 'pointer',
-                color: '#6b7280',
-                padding: '4px',
-                borderRadius: '4px'
-              }}
-            >
-              ✕
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '24px',
+              cursor: 'pointer',
+              color: '#6b7280',
+              padding: '4px',
+              borderRadius: '4px'
+            }}
+          >
+            ✕
+          </button>
         </div>
 
         <div style={{ backgroundColor: '#f0f9ff', border: '1px solid #bae6fd', borderRadius: 8, padding: 12, marginBottom: 16 }}>
