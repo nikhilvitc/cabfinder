@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-const PartnerResults = ({ partners = [], selectedUser, onClear }) => {
+const PartnerResults = ({ partners = [], selectedUser, onClear, matchWindow }) => {
   if (!selectedUser) return null
 
   const formatTime = (timeStr) => {
@@ -130,7 +130,7 @@ const PartnerResults = ({ partners = [], selectedUser, onClear }) => {
             <ul style={{ fontSize: '0.875rem', color: '#0c4a6e', margin: 0, paddingLeft: '1rem' }}>
               <li>Same destination: {selectedUser.place}</li>
               <li>Same travel date: {selectedUser.travelDate}</li>
-              <li>Departure time within -1 hour to +30 minutes of your time</li>
+              <li>Departure time within {formatWindow(matchWindow)}</li>
             </ul>
           </div>
         )}
@@ -140,3 +140,15 @@ const PartnerResults = ({ partners = [], selectedUser, onClear }) => {
 }
 
 export default PartnerResults
+
+function formatWindow(windowObj) {
+  const before = windowObj?.before ?? 120
+  const after = windowObj?.after ?? 60
+
+  const fmt = (mins) => {
+    if (mins % 60 === 0) return `${Math.abs(mins) / 60} hour${Math.abs(mins) / 60 === 1 ? '' : 's'}`
+    return `${mins} minute${mins === 1 ? '' : 's'}`
+  }
+
+  return `-${fmt(before)} to +${fmt(after)} of your time`
+}

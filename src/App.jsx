@@ -13,8 +13,11 @@ function App() {
   const [filters, setFilters] = useState({
     search: '',
     date: '',
-    destination: ''
+    destination: '',
+    // matching window in minutes: { before: <minutes>, after: <minutes> }
+    matchWindow: { before: 120, after: 60 }
   })
+  const [matchPreset, setMatchPreset] = useState('default')
   const [selectedUser, setSelectedUser] = useState(null)
   const [partners, setPartners] = useState([])
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -156,7 +159,7 @@ function App() {
         return true
       }
       
-      // Time compatibility: within -2 hours to +1 hour (only if both have valid times)
+      // Time compatibility: use configured window (before/after in minutes)
       try {
         const userMoment = moment(userTime, 'HH:mm:ss')
         const partnerMoment = moment(person.departureTime, 'HH:mm:ss')
@@ -167,7 +170,8 @@ function App() {
         }
         
         const diffMinutes = partnerMoment.diff(userMoment, 'minutes')
-        return diffMinutes >= -120 && diffMinutes <= 60
+        const { before = 120, after = 60 } = filters.matchWindow || {}
+        return diffMinutes >= -before && diffMinutes <= after
       } catch {
         return false // If any error occurs, don't consider them compatible
       }
@@ -336,6 +340,84 @@ function App() {
                   </select>
                 </div>
                 
+                <div style={{ flex: '1', minWidth: '200px' }}>
+                  <label style={{
+                    display: 'block',
+                    marginBottom: '8px',
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    color: '#374151'
+                  }}>
+                    Matching Time Window
+                  </label>
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <select
+                      value={matchPreset}
+                      onChange={(e) => {
+                        const p = e.target.value
+                        setMatchPreset(p)
+                        if (p === 'default') {
+                          handleFilterChange({ matchWindow: { before: 120, after: 60 } })
+                        } else if (p === 'strict') {
+                          handleFilterChange({ matchWindow: { before: 30, after: 30 } })
+                        } else if (p === 'flexible') {
+                          handleFilterChange({ matchWindow: { before: 240, after: 240 } })
+                        } else if (p === 'custom') {
+                          // keep existing or set reasonable defaults
+                          handleFilterChange({ matchWindow: filters.matchWindow || { before: 120, after: 60 } })
+                        }
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '12px 16px',
+                        fontSize: '16px',
+                        borderRadius: '8px',
+                        border: '2px solid #d1d5db',
+                        backgroundColor: 'white',
+                        color: '#1f2937',
+                        outline: 'none',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      <option value="default">Default (-2h to +1h)</option>
+                      <option value="strict">Strict (-30m to +30m)</option>
+                      <option value="flexible">Flexible (-4h to +4h)</option>
+                      <option value="custom">Custom (minutes)</option>
+                    </select>
+                  </div>
+
+                  {matchPreset === 'custom' && (
+                    <div style={{ display: 'flex', gap: '8px', marginTop: '8px' }}>
+                      <input
+                        type="number"
+                        min={0}
+                        value={filters.matchWindow?.before ?? 120}
+                        onChange={(e) => handleFilterChange({ matchWindow: { before: Number(e.target.value), after: filters.matchWindow?.after ?? 60 } })}
+                        style={{
+                          flex: 1,
+                          padding: '8px 12px',
+                          borderRadius: '8px',
+                          border: '1px solid #d1d5db'
+                        }}
+                        placeholder="Minutes before"
+                      />
+                      <input
+                        type="number"
+                        min={0}
+                        value={filters.matchWindow?.after ?? 60}
+                        onChange={(e) => handleFilterChange({ matchWindow: { before: filters.matchWindow?.before ?? 120, after: Number(e.target.value) } })}
+                        style={{
+                          flex: 1,
+                          padding: '8px 12px',
+                          borderRadius: '8px',
+                          border: '1px solid #d1d5db'
+                        }}
+                        placeholder="Minutes after"
+                      />
+                    </div>
+                  )}
+                </div>
+                
                 <div style={{ flex: '1', minWidth: '140px' }}>
                   <label style={{
                     display: 'block',
@@ -414,6 +496,7 @@ function App() {
           onClose={clearPartnerResults}
           partners={partners}
           selectedUser={selectedUser}
+          matchWindow={filters.matchWindow}
         />
       </div>
       <Analytics />
