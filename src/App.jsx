@@ -245,48 +245,6 @@ function App() {
             </div>
           )}
 
-          {/* Moving Alert for Add Travel */}
-          <div 
-            className="moving-alert" 
-            onClick={() => {
-              // Scroll to header and highlight the Add Travel button
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-              // Optional: Flash the Add Travel button
-              const addTravelBtn = document.querySelector('.add-travel-btn');
-              if (addTravelBtn) {
-                addTravelBtn.style.animation = 'gentlePulse 1s ease-in-out 3';
-                setTimeout(() => {
-                  addTravelBtn.style.animation = '';
-                }, 3000);
-              }
-            }}
-            style={{
-            background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4)',
-            color: 'white',
-            padding: '12px 20px',
-            borderRadius: '8px',
-            margin: '16px auto',
-            maxWidth: '600px',
-            textAlign: 'center',
-            fontWeight: '600',
-            fontSize: '16px',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            <div style={{
-              position: 'absolute',
-              top: 0,
-              left: '-100%',
-              width: '100%',
-              height: '100%',
-              background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)',
-              animation: 'shimmer 3s infinite'
-            }}></div>
-            <span style={{ position: 'relative', zIndex: 1 }}>
-              📝 <strong>Want to find travel partners?</strong> Click "Add Travel" in header to fill the form! 👆
-            </span>
-          </div>
-
           {/* FILTERS - MATCHING WEBSITE THEME */}
           <div style={{
             background: 'white',
