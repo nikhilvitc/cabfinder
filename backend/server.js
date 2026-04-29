@@ -245,7 +245,7 @@ app.get('/api/check-updates', async (req, res) => {
 // Find cab partners for a specific user
 app.post('/api/find-partners', async (req, res) => {
   try {
-    const { userId, name, travelDate, departureTime, place } = req.body;
+    const { userId, name, travelDate, departureTime, place, minutesBefore, minutesAfter } = req.body;
     
     if (!travelDate || !place) {
       return res.status(400).json({
@@ -261,7 +261,9 @@ app.post('/api/find-partners', async (req, res) => {
     }
     
     // Find matching partners (departureTime optional = flexible)
-    const partners = findMatchingPartners(userId, name, travelDate, departureTime, place);
+    const before = Number.isFinite(Number(minutesBefore)) ? Math.max(0, Number(minutesBefore)) : 60;
+    const after = Number.isFinite(Number(minutesAfter)) ? Math.max(0, Number(minutesAfter)) : 30;
+    const partners = findMatchingPartners(userId, name, travelDate, departureTime, place, before, after);
     
     res.json({
       success: true,
@@ -278,7 +280,7 @@ app.post('/api/find-partners', async (req, res) => {
 });
 
 // Function to find matching partners (same window as product docs: −1h to +30m when both times known)
-function findMatchingPartners(userId, userName, travelDate, departureTime, place) {
+function findMatchingPartners(userId, userName, travelDate, departureTime, place, minutesBefore = 60, minutesAfter = 30) {
   const userPlace = (place || '').toLowerCase().trim();
   const userTime = parseTime(departureTime);
   
@@ -297,7 +299,7 @@ function findMatchingPartners(userId, userName, travelDate, departureTime, place
     if (!userTime || !personTime) return true;
     
     const timeDiff = personTime.diff(userTime, 'minutes');
-    return timeDiff >= -60 && timeDiff <= 30;
+    return timeDiff >= -minutesBefore && timeDiff <= minutesAfter;
   });
 }
 

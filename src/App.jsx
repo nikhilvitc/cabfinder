@@ -24,6 +24,10 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [lastUpdate, setLastUpdate] = useState(null)
+  const [matchRange, setMatchRange] = useState({
+    minutesBefore: 60,
+    minutesAfter: 30,
+  })
 
   const fetchTravelData = async () => {
     try {
@@ -125,6 +129,8 @@ function App() {
     setPartners([])
 
     const apiUrl = getApiBaseUrl()
+    const minutesBefore = Math.max(0, Number(matchRange.minutesBefore) || 0)
+    const minutesAfter = Math.max(0, Number(matchRange.minutesAfter) || 0)
     try {
       const { data } = await axios.post(
         `${apiUrl}/api/find-partners`,
@@ -134,13 +140,15 @@ function App() {
           travelDate: user.travelDate,
           departureTime: user.departureTime || '',
           place: user.place,
+          minutesBefore,
+          minutesAfter,
         },
         { timeout: 20000 }
       )
       setPartners(Array.isArray(data?.partners) ? data.partners : [])
     } catch (e) {
       console.warn('Partner API failed, using local match:', e)
-      setPartners(matchPartnersLocal(user, travelData))
+      setPartners(matchPartnersLocal(user, travelData, { minutesBefore, minutesAfter }))
     } finally {
       setPartnerLoading(false)
     }
@@ -155,6 +163,13 @@ function App() {
 
   const handleFilterChange = (newFilters) => {
     setFilters((prev) => ({ ...prev, ...newFilters }))
+  }
+
+  const handleMatchRangeChange = (next) => {
+    setMatchRange((prev) => ({
+      ...prev,
+      ...next,
+    }))
   }
 
   useEffect(() => {
@@ -192,9 +207,11 @@ function App() {
 
           <SearchFilters
             filters={filters}
+            matchRange={matchRange}
             travelData={travelData}
             filteredCount={filteredData.length}
             onFilterChange={handleFilterChange}
+            onMatchRangeChange={handleMatchRangeChange}
             onClear={() => handleFilterChange({ search: '', date: '', destination: '' })}
           />
 
@@ -207,6 +224,7 @@ function App() {
           partners={partners}
           selectedUser={selectedUser}
           isLoading={partnerLoading}
+          matchRange={matchRange}
         />
       </div>
       <Analytics />

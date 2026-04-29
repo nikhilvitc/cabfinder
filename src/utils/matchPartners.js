@@ -8,11 +8,17 @@ function parseTime(timeStr) {
   return m.isValid() ? m : null
 }
 
-/** Same rules as backend: same date & place (case-insensitive), −1h..+30m when both times known; flexible if either time missing. */
-export function matchPartnersLocal(user, allData) {
+/** Same rules as backend: same date & place (case-insensitive), configurable range when both times known; flexible if either time missing. */
+export function matchPartnersLocal(user, allData, options = {}) {
   const list = Array.isArray(allData) ? allData : []
   const userPlace = (user.place || '').toLowerCase().trim()
   const userTime = parseTime(user.departureTime)
+  const minutesBefore = Number.isFinite(Number(options.minutesBefore))
+    ? Math.max(0, Number(options.minutesBefore))
+    : 60
+  const minutesAfter = Number.isFinite(Number(options.minutesAfter))
+    ? Math.max(0, Number(options.minutesAfter))
+    : 30
 
   return list.filter((person) => {
     if (person.id === user.id) return false
@@ -24,6 +30,6 @@ export function matchPartnersLocal(user, allData) {
     if (!userTime || !personTime) return true
 
     const diff = personTime.diff(userTime, 'minutes')
-    return diff >= -60 && diff <= 30
+    return diff >= -minutesBefore && diff <= minutesAfter
   })
 }

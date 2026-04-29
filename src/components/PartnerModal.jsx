@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import moment from 'moment'
 
-const PartnerModal = ({ isOpen, onClose, partners, selectedUser, isLoading }) => {
+const PartnerModal = ({ isOpen, onClose, partners, selectedUser, isLoading, matchRange }) => {
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e) => {
@@ -184,7 +184,10 @@ const PartnerModal = ({ isOpen, onClose, partners, selectedUser, isLoading }) =>
               <p className="font-semibold text-cyan-900">How matching works</p>
               <ul className="mt-2 list-inside list-disc space-y-1 text-cyan-900/90">
                 <li>Same destination (case-insensitive) and same travel date</li>
-                <li>If both times are set: within −1 hour to +30 minutes</li>
+                <li>
+                  If both times are set: within −{matchRange?.minutesBefore ?? 60} min to +
+                  {matchRange?.minutesAfter ?? 30} min
+                </li>
                 <li>If either time is empty: flexible match</li>
               </ul>
             </div>

@@ -2,9 +2,11 @@ import React from 'react'
 
 export default function SearchFilters({
   filters,
+  matchRange,
   travelData,
   filteredCount,
   onFilterChange,
+  onMatchRangeChange,
   onClear,
 }) {
   const hasFilters = Boolean(
@@ -78,6 +80,34 @@ export default function SearchFilters({
             ))}
           </select>
         </label>
+      </div>
+
+      <div className="mt-5 rounded-xl border border-indigo-100 bg-indigo-50/60 p-3.5">
+        <p className="text-xs font-semibold uppercase tracking-wider text-indigo-700">Matching window</p>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <label className="flex flex-col gap-2">
+            <span className="text-xs font-medium text-slate-600">Minutes before your time</span>
+            <input
+              type="number"
+              min="0"
+              max="720"
+              value={matchRange?.minutesBefore ?? 60}
+              onChange={(e) => onMatchRangeChange({ minutesBefore: e.target.value })}
+              className="input-glass w-full"
+            />
+          </label>
+          <label className="flex flex-col gap-2">
+            <span className="text-xs font-medium text-slate-600">Minutes after your time</span>
+            <input
+              type="number"
+              min="0"
+              max="720"
+              value={matchRange?.minutesAfter ?? 30}
+              onChange={(e) => onMatchRangeChange({ minutesAfter: e.target.value })}
+              className="input-glass w-full"
+            />
+          </label>
+        </div>
       </div>
     </section>
   )
