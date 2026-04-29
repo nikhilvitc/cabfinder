@@ -494,8 +494,16 @@ html {
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(226, 232, 240, 0.9);
   border-radius: 1.25rem;
-  padding: 1.25rem 1.5rem;
+  padding: 0.95rem 1.05rem;
   box-shadow: 0 4px 24px -4px rgba(15, 23, 42, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+}
+
+.filters-panel h2 {
+  font-size: 1.02rem !important;
+}
+
+.filters-panel p {
+  font-size: 0.78rem;
 }
 
 .input-glass,
@@ -503,8 +511,8 @@ html {
   border-radius: 0.75rem;
   border: 1px solid #e2e8f0;
   background: rgba(255, 255, 255, 0.95);
-  padding: 0.65rem 0.9rem;
-  font-size: 0.9375rem;
+  padding: 0.5rem 0.68rem;
+  font-size: 0.84rem;
   color: #0f172a;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -522,7 +530,7 @@ html {
 
 .btn-clear-filter {
   align-self: flex-start;
-  padding: 0.45rem 0.85rem;
+  padding: 0.33rem 0.58rem;
   border-radius: 9999px;
   font-weight: 600;
   color: #475569;
@@ -530,6 +538,7 @@ html {
   border: 1px solid #e2e8f0;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  font-size: 0.74rem;
 }
 
 .btn-clear-filter:hover:not(:disabled) {
@@ -551,6 +560,17 @@ html {
 
 .filters-content {
   overflow: hidden;
+}
+
+.filter-grid {
+  margin-top: 0.75rem !important;
+  gap: 0.65rem !important;
+}
+
+.matching-window-card {
+  margin-top: 0.72rem !important;
+  padding: 0.65rem 0.75rem !important;
+  border-radius: 0.75rem !important;
 }
 
 @keyframes fadeInUp {
