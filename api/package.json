@@ -1,0 +1,10 @@
+{
+  "name": "cabmate-finder-api",
+  "version": "1.0.0",
+  "description": "API functions for CabMate Finder",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.12.2",
+    "csv-parser": "^3.2.0"
+  }
+}

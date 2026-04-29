@@ -1,0 +1,45 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Black background circle -->
+  <circle cx="100" cy="100" r="95" fill="black"/>
+  
+  <!-- Purple circular outline -->
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#8B5CF6" stroke-width="8"/>
+  
+  <!-- Two hands in center -->
+  <g transform="translate(100, 100)">
+    <!-- Left hand -->
+    <g transform="translate(-15, -8)">
+      <ellipse cx="0" cy="8" rx="8" ry="12" fill="#F4C2A1"/>
+      <ellipse cx="0" cy="6" rx="6" ry="9" fill="#FFB6C1"/>
+      <!-- Palm -->
+      <ellipse cx="0" cy="4" rx="5" ry="6" fill="#FFA07A"/>
+      <!-- Fingers -->
+      <ellipse cx="-3" cy="1" rx="2" ry="4" fill="#F4C2A1"/>
+      <ellipse cx="0" cy="0" rx="2" ry="4" fill="#F4C2A1"/>
+      <ellipse cx="3" cy="1" rx="2" ry="4" fill="#F4C2A1"/>
+      <ellipse cx="0" cy="-1" rx="1.5" ry="3" fill="#F4C2A1"/>
+    </g>
+    
+    <!-- Right hand -->
+    <g transform="translate(15, -8)">
+      <ellipse cx="0" cy="8" rx="8" ry="12" fill="#F4C2A1"/>
+      <ellipse cx="0" cy="6" rx="6" ry="9" fill="#FFB6C1"/>
+      <!-- Palm -->
+      <ellipse cx="0" cy="4" rx="5" ry="6" fill="#FFA07A"/>
+      <!-- Fingers -->
+      <ellipse cx="-3" cy="1" rx="2" ry="4" fill="#F4C2A1"/>
+      <ellipse cx="0" cy="0" rx="2" ry="4" fill="#F4C2A1"/>
+      <ellipse cx="3" cy="1" rx="2" ry="4" fill="#F4C2A1"/>
+      <ellipse cx="0" cy="-1" rx="1.5" ry="3" fill="#F4C2A1"/>
+    </g>
+  </g>
+  
+  <!-- "U HELP" text below hands -->
+  <text x="100" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#8B5CF6">U HELP</text>
+  
+  <!-- Arc text around the border -->
+  <path id="arc" d="M 30 100 A 70 70 0 0 1 170 100" fill="none"/>
+  <text font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#8B5CF6">
+    <textPath href="#arc" startOffset="0%">YOUR COLLEGE, YOUR WAY, YOUR FEATURE</textPath>
+  </text>
+</svg>

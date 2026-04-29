@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for cabmate-finder-backend on 2025-10-12T13:59:59Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "cabmate-finder-backend"
+primary_region = "bom"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+
+[http_service]
+  internal_port = 3001
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
