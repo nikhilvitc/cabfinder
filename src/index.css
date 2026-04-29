@@ -25,6 +25,8 @@ body {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y; /* Allow vertical scrolling on body */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 #root {
@@ -1721,4 +1723,59 @@ html {
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* Final mobile overrides (keep last to win specificity/order conflicts) */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.42rem 0 0.5rem !important;
+  }
+
+  .header-content {
+    gap: 0.35rem !important;
+  }
+
+  .site-title {
+    font-size: 1.15rem !important;
+    line-height: 1.2;
+  }
+
+  .site-tagline {
+    font-size: 0.68rem !important;
+    line-height: 1.3;
+  }
+
+  .header-logo {
+    height: 44px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-title {
+    font-size: 1.06rem !important;
+  }
+
+  .site-tagline {
+    font-size: 0.64rem !important;
+  }
+
+  .header-logo {
+    height: 40px !important;
+  }
+
+  .header-stats-and-actions {
+    gap: 0.55rem !important;
+  }
+
+  .stat-card {
+    min-height: 42px !important;
+    padding: 0.35rem 0.5rem !important;
+  }
+
+  .add-travel-btn,
+  .refresh-btn {
+    min-height: 40px !important;
+    padding: 0.5rem 0.65rem !important;
+    font-size: 0.78rem !important;
+  }
 }

@@ -33,6 +33,10 @@ const Header = ({ onRefresh, lastUpdate, dataCount }) => {
                 Shared rides from your campus community.{' '}
                 <a href="https://www.vhelpcc.com/" target="_blank" rel="noopener noreferrer">
                   Visit V Help
+                </a>{' '}
+                •{' '}
+                <a href="https://www.linkedin.com/company/vhelpcc/" target="_blank" rel="noopener noreferrer">
+                  LinkedIn
                 </a>
               </p>
             </div>
