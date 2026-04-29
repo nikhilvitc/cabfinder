@@ -29,8 +29,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// Google Sheets CSV URL
-const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT9OJdZugEF4Snu9cAGK3OqLxXv9BJnbXL1ccvg9mhvIkaMR4qn2o7t7isYTSgW92GRec8CDbzCFbgY/pub?output=csv';
+// Google Sheets CSV URL (override in deployment via env var)
+const GOOGLE_SHEETS_URL =
+  process.env.GOOGLE_SHEETS_URL ||
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu1eUkLS9QV1z5X8jdCFAC77SOIu6wdH_pKpuqAW5NE9XpkMZwvroAy8KqRkP979ktfZb4Aftl7fcP/pub?output=csv';
 
 // Cache for storing parsed data
 let travelData = [];
@@ -127,8 +129,21 @@ function generateDataHash(data) {
 async function fetchTravelData() {
   try {
     console.log('Fetching data from Google Sheets...');
-    const response = await axios.get(GOOGLE_SHEETS_URL);
+    const response = await axios.get(GOOGLE_SHEETS_URL, {
+      timeout: 20000,
+      maxRedirects: 5,
+      validateStatus: (status) => status >= 200 && status < 400,
+    });
     const csvText = response.data;
+
+    // If the sheet is no longer public, Google returns HTML/login instead of CSV.
+    if (typeof csvText === 'string' && csvText.toLowerCase().includes('<html')) {
+      const err = new Error(
+        'Google Sheets URL is not publicly accessible. Publish the sheet to web (CSV) or provide a public CSV URL.'
+      );
+      err.code = 'SHEETS_NOT_PUBLIC';
+      throw err;
+    }
 
     const parsedData = await parseCSVData(csvText);
     const newDataHash = generateDataHash(parsedData);
@@ -183,10 +198,28 @@ app.get('/api/travel-data', async (req, res) => {
       dataHash: lastDataHash
     });
   } catch (error) {
-    res.status(500).json({
+    // Serve stale cached data if we have it, instead of hard failing the UI.
+    if (travelData.length > 0) {
+      return res.json({
+        success: true,
+        data: travelData,
+        count: travelData.length,
+        lastUpdated: new Date(lastFetchTime).toISOString(),
+        dataHash: lastDataHash,
+        stale: true,
+        warning:
+          'Using cached travel data because the source sheet is temporarily inaccessible.'
+      });
+    }
+
+    const status = error.response?.status || 500;
+    const isSheetsAuthIssue = status === 401 || error.code === 'SHEETS_NOT_PUBLIC';
+    res.status(isSheetsAuthIssue ? 502 : 500).json({
       success: false,
       error: 'Failed to fetch travel data',
-      message: error.message
+      message: isSheetsAuthIssue
+        ? 'Google Sheets source is not public. Publish it to web as CSV or update GOOGLE_SHEETS_URL to a public CSV link.'
+        : error.message
     });
   }
 });

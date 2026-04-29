@@ -75,7 +75,7 @@ const PartnerModal = ({ isOpen, onClose, partners, selectedUser, isLoading }) =>
           </div>
           <div className="modal-toolbar-actions">
             <a
-              href="https://forms.gle/ribwApJU9G4RA2Zh8"
+              href="https://docs.google.com/forms/d/1nKF-wn_QL6L_nJE3YvDmmG2JqTbHXx0a_r5A0vu_DfQ/viewform"
               target="_blank"
               rel="noopener noreferrer"
               className="modal-link-btn"

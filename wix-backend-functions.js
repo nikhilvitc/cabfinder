@@ -5,7 +5,7 @@ import { fetch } from 'wix-fetch';
 import wixData from 'wix-data';
 
 // Google Sheets CSV URL
-const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT9OJdZugEF4Snu9cAGK3OqLxXv9BJnbXL1ccvg9mhvIkaMR4qn2o7t7isYTSgW92GRec8CDbzCFbgY/pub?output=csv';
+const GOOGLE_SHEETS_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu1eUkLS9QV1z5X8jdCFAC77SOIu6wdH_pKpuqAW5NE9XpkMZwvroAy8KqRkP979ktfZb4Aftl7fcP/pub?output=csv';
 
 // Collection name for storing travel data
 const TRAVEL_DATA_COLLECTION = 'TravelData';

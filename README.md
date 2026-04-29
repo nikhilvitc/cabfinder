@@ -65,7 +65,7 @@ A modern web app that helps students find compatible cab partners using live Goo
 ## 📊 Data Source
 
 The application fetches data from a Google Sheets CSV export:
-- **URL**: `https://docs.google.com/spreadsheets/d/e/2PACX-1vT9OJdZugEF4Snu9cAGK3OqLxXv9BJnbXL1ccvg9mhvIkaMR4qn2o7t7isYTSgW92GRec8CDbzCFbgY/pub?output=csv`
+- **URL**: `https://docs.google.com/spreadsheets/d/e/2PACX-1vSu1eUkLS9QV1z5X8jdCFAC77SOIu6wdH_pKpuqAW5NE9XpkMZwvroAy8KqRkP979ktfZb4Aftl7fcP/pub?output=csv`
 - **Update Frequency**: Data is fetched on request for near real-time freshness
 - **Manual Refresh**: Click the "Refresh Data" button in the header
 
