@@ -1,6 +1,5 @@
 import React from 'react'
 import logo from '../assets/logo.png'
-import perplxityImage from '../assets/perplxity.jpeg'
 
 const Header = ({ onRefresh, lastUpdate, dataCount }) => {
   const formatLastUpdate = (timestamp) => {
@@ -19,13 +18,6 @@ const Header = ({ onRefresh, lastUpdate, dataCount }) => {
 
   return (
     <header className="header">
-      <div className="perplexity-header-ad">
-        <a href="https://pplx.ai/Vitcai" target="_blank" rel="noopener noreferrer">
-          <img src={perplxityImage} alt="" />
-          <span className="ad-label">Ad</span>
-        </a>
-      </div>
-
       <div className="header-content">
         <div className="header-brand-block">
           <a
