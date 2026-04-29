@@ -1077,7 +1077,8 @@ html {
   .filters-panel .input-glass,
   .filters-panel .select-glass {
     padding: 0.5rem 0.65rem;
-    font-size: 0.83rem;
+    /* Keep at 16px to prevent iOS Safari auto-zoom on focus */
+    font-size: 16px;
     border-radius: 0.6rem;
   }
 
@@ -1113,7 +1114,7 @@ html {
   }
   
   .site-title {
-    font-size: 1.55rem;
+    font-size: 1.35rem;
   }
   
   .header p {
@@ -1342,7 +1343,8 @@ html {
   .filters-panel .input-glass,
   .filters-panel .select-glass {
     padding: 0.42rem 0.58rem;
-    font-size: 0.78rem;
+    /* Keep at 16px to prevent iOS Safari auto-zoom on focus */
+    font-size: 16px;
     border-radius: 0.52rem;
   }
 
@@ -1450,7 +1452,7 @@ html {
   }
   
   .site-title {
-    font-size: 1.35rem;
+    font-size: 1.2rem;
   }
   
   .header p {
@@ -1566,13 +1568,13 @@ html {
 
 @media (max-width: 768px) {
   .header-logo {
-    height: 66px;
+    height: 58px;
   }
 }
 
 @media (max-width: 480px) {
   .header-logo {
-    height: 60px;
+    height: 52px;
   }
 }
 
