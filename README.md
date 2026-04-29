@@ -1,34 +1,34 @@
-# 🚗 CabMate Finder
+# 🚗 V Help Cabpool (CabMate Finder)
 
-A responsive web application that connects students and travelers based on their travel details from Google Sheets data. Find your perfect cab partner for shared rides!
+A modern web app that helps students find compatible cab partners using live Google Sheets travel data.
 
 ## ✨ Features
 
-- **Real-time Data**: Automatically fetches travel data from Google Sheets
-- **Smart Matching**: Finds partners traveling to the same destination within compatible time windows
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Advanced Filtering**: Search and filter by name, date, destination, and contact
-- **Time-based Matching**: Partners within -1 hour to +30 minutes of departure time
-- **Modern UI**: Clean, intuitive interface built with TailwindCSS
+- **Live Google Sheets Sync**: Pulls latest travel records through the backend API
+- **Smart Matching**: Same destination + same date + compatible departure window
+- **Flexible Time Support**: If one side has no departure time, it still matches as flexible
+- **Modern UI**: Glassmorphism cards, improved modal UX, and better mobile responsiveness
+- **Powerful Filters**: Search by name, place, contact, date, and destination
+- **Fast Fallback Matching**: Frontend computes local matching if partner API is unavailable
 
 ## 🛠️ Tech Stack
 
 ### Frontend
 - **React 19** with Vite
-- **TailwindCSS** for styling
+- **TailwindCSS v4** + custom CSS for styling
 - **Axios** for API calls
 - **Moment.js** for date/time handling
 
 ### Backend
 - **Node.js** with Express
 - **CORS** for cross-origin requests
-- **CSV Parser** for Google Sheets data
+- **Google Sheets CSV ingestion** with custom parsing
 - **Axios** for external API calls
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v16 or higher)
+- Node.js (v18 or higher)
 - npm or yarn
 
 ### Installation
@@ -41,7 +41,7 @@ A responsive web application that connects students and travelers based on their
    npm install
    ```
 
-2. **Start the application:**
+2. **Start the application (recommended):**
    ```bash
    # From the root directory
    npm run start:dev
@@ -66,7 +66,7 @@ A responsive web application that connects students and travelers based on their
 
 The application fetches data from a Google Sheets CSV export:
 - **URL**: `https://docs.google.com/spreadsheets/d/e/2PACX-1vT9OJdZugEF4Snu9cAGK3OqLxXv9BJnbXL1ccvg9mhvIkaMR4qn2o7t7isYTSgW92GRec8CDbzCFbgY/pub?output=csv`
-- **Update Frequency**: Data refreshes every 5 minutes automatically
+- **Update Frequency**: Data is fetched on request for near real-time freshness
 - **Manual Refresh**: Click the "Refresh Data" button in the header
 
 ## 🎯 How It Works
@@ -77,7 +77,9 @@ When you click "Find Cab Partner" for any traveler, the system finds matches bas
 
 1. **Same Destination**: Case-insensitive match on the "Place" field
 2. **Same Travel Date**: Exact date match
-3. **Compatible Time**: Departure time within -1 hour to +30 minutes
+3. **Compatible Time**:
+   - If both times exist: partner must be within **-1 hour to +30 minutes**
+   - If one/both times are missing: treated as a **flexible** match
 
 ### Example
 
@@ -90,7 +92,7 @@ If **Chinmay** (17/10/2025, 17:30, "VITC to Airport") clicks "Find Partner":
 ## 📱 Usage
 
 1. **View Travel Records**: Browse all travel entries in the main table
-2. **Apply Filters**: Use the sidebar to filter by search term, date, or destination
+2. **Apply Filters**: Use the top filter panel to narrow by search/date/destination
 3. **Find Partners**: Click "Find Cab Partner" on any row
 4. **View Matches**: See compatible travelers in the results section
 5. **Contact Partners**: Use the contact buttons to reach out
@@ -102,6 +104,7 @@ If **Chinmay** (17/10/2025, 17:30, "VITC to Airport") clicks "Find Partner":
 - `GET /api/travel-data` - Fetch all travel records
 - `POST /api/find-partners` - Find matching partners for a user
 - `GET /api/health` - Health check endpoint
+- `GET /api/check-updates` - Lightweight data-hash based update check
 
 ### Request Format for Finding Partners
 
@@ -115,11 +118,15 @@ If **Chinmay** (17/10/2025, 17:30, "VITC to Airport") clicks "Find Partner":
 }
 ```
 
-## 🎨 Customization
+`departureTime` can be omitted or sent as an empty string for flexible-time matching.
 
-### Styling
-- Modify `tailwind.config.js` for theme customization
-- Update component styles in `/src/components/`
+## 🎨 Configuration
+
+### Frontend API URL
+- Use `VITE_API_URL` in a `.env` file to override backend base URL.
+- If not set:
+  - Dev: `http://localhost:3001`
+  - Prod: `https://cabfinder.onrender.com`
 
 ### Data Source
 - Change `GOOGLE_SHEETS_URL` in `/backend/server.js`
@@ -137,11 +144,13 @@ npm run build
 # Deploy the 'dist' folder
 ```
 
-### Backend (Railway/Heroku)
+### Backend (Render/Railway/Heroku)
 ```bash
 cd backend
 # Deploy with your preferred platform
 ```
+
+After pushing to GitHub, trigger a fresh redeploy for both frontend and backend so UI + matching logic update together.
 
 ## 📝 Data Structure
 
@@ -150,7 +159,7 @@ Each travel record contains:
 - `name`: Traveler's name
 - `contact`: Phone number
 - `travelDate`: Date of travel (DD/MM/YYYY)
-- `departureTime`: Departure time (HH:mm:ss)
+- `departureTime`: Departure time (HH:mm:ss or HH:mm, optional)
 - `place`: Destination/route
 - `flightTrainNumber`: Flight or train number (optional)
 
