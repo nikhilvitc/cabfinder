@@ -1113,7 +1113,7 @@ html {
   }
   
   .site-title {
-    font-size: 1.25rem;
+    font-size: 1.55rem;
   }
   
   .header p {
@@ -1450,7 +1450,7 @@ html {
   }
   
   .site-title {
-    font-size: 1rem;
+    font-size: 1.35rem;
   }
   
   .header p {
@@ -1557,7 +1557,7 @@ html {
 }
 
 .header-logo {
-  height: 68px;
+  height: 76px;
   width: auto;
   object-fit: contain;
   border-radius: 0.5rem;
@@ -1566,13 +1566,13 @@ html {
 
 @media (max-width: 768px) {
   .header-logo {
-    height: 58px;
+    height: 66px;
   }
 }
 
 @media (max-width: 480px) {
   .header-logo {
-    height: 52px;
+    height: 60px;
   }
 }
 

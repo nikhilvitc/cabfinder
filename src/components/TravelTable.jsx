@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TravelTable = ({ data = [], onFindPartners }) => {
+const TravelTable = ({ data = [], onFindPartners, matchRange }) => {
   if (data.length === 0) {
     return (
       <div className="table-shell">
@@ -34,7 +34,8 @@ const TravelTable = ({ data = [], onFindPartners }) => {
         <div>
           <h3 className="font-display text-base font-semibold text-slate-900">Travelers</h3>
           <p className="mt-1 text-sm text-slate-500">
-            Pick someone going your way, then match on time window (−1h to +30 min).
+            Pick someone going your way, then match on time window (
+            −{matchRange?.minutesBefore ?? 60} min to +{matchRange?.minutesAfter ?? 30} min).
           </p>
         </div>
       </div>

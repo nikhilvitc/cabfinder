@@ -26,7 +26,7 @@ const Header = ({ onRefresh, lastUpdate, dataCount }) => {
             rel="noopener noreferrer"
             className="header-brand-link"
           >
-            <img src={logo} alt="" className="header-logo" width={48} height={48} />
+            <img src={logo} alt="" className="header-logo" />
             <div>
               <h1 className="site-title">V Help Cabpool</h1>
               <p className="site-tagline">

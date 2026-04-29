@@ -215,7 +215,7 @@ function App() {
             onClear={() => handleFilterChange({ search: '', date: '', destination: '' })}
           />
 
-          <TravelTable data={filteredData} onFindPartners={findPartners} />
+          <TravelTable data={filteredData} onFindPartners={findPartners} matchRange={matchRange} />
         </main>
 
         <PartnerModal
