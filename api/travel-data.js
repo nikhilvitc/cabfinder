@@ -23,43 +23,86 @@ async function parseCSVData(csvText) {
     return [];
   }
   
-  // Handle the case where headers might be split across lines
-  let headerLine = lines[0];
-  if (headerLine.includes('"Place"') && !headerLine.includes('Flight/train number')) {
-    headerLine = 'Timestamp,Email address,Name,Contact Number ,Travel Date,Departure time from the location ,Place,Flight/train number (optional),Column 9';
-  }
+  const headerLine = lines[0];
   
   const headers = headerLine.split(',').map(h => h.trim().replace(/"/g, ''));
   const results = [];
+
+  const getField = (row, keys) => {
+    for (const key of keys) {
+      if (row[key] != null && String(row[key]).trim() !== '') {
+        return row[key];
+      }
+    }
+    return '';
+  };
   
   for (let i = 1; i < lines.length; i++) {
-    const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+    const values = parseCSVLine(lines[i]);
     
-    if (values.length >= headers.length) {
+    if (values.length === headers.length) {
       const row = {};
       headers.forEach((header, index) => {
         row[header] = values[index] || '';
       });
       
+      const name = getField(row, ['Name']);
+      const travelDate = getField(row, ['Travel Date', 'Travel date']);
+      const place = getField(row, ['Place', 'Destination']);
+
       // Only include rows with valid data
-      if (row['Name'] && row['Travel Date'] && row['Place']) {
+      if (name && travelDate && place) {
         results.push({
-          id: crypto.createHash('md5').update(`${row['Name']}-${row['Travel Date']}-${row['Place']}`).digest('hex'),
-          timestamp: row['Timestamp'] || '',
-          email: row['Email address'] || '',
-          name: row['Name'] || '',
-          contact: row['Contact Number '] || '',
-          travelDate: row['Travel Date'] || '',
-          departureTime: row['Departure time from the location'] || row['Departure time from the location '] || '',
-          place: row['Place'] || '',
-          flightTrainNumber: row['Flight/train number (optional)'] || '',
-          column9: row['Column 9'] || ''
+          id: crypto.createHash('md5').update(`${name}-${travelDate}-${place}`).digest('hex'),
+          timestamp: getField(row, ['Timestamp']),
+          email: getField(row, ['Email address', 'Email', 'Email Address']),
+          name,
+          contact: getField(row, ['Contact Number', 'Contact Number ', 'Contact number']),
+          travelDate,
+          departureTime: getField(row, [
+            'Departure time from VITC (24hrs format)',
+            'Departure time from VITC',
+            'Departure time from the location',
+            'Departure time from the location ',
+            'Departure Time'
+          ]),
+          place,
+          flightTrainNumber: getField(row, [
+            'Flight / train',
+            'Flight/train',
+            'Flight/train number (optional)',
+            'Flight / train number',
+            'Flight/Train'
+          ]),
+          column9: getField(row, ['Column 9'])
         });
       }
     }
   }
   
   return results;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current.trim().replace(/"/g, ''));
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+
+  result.push(current.trim().replace(/"/g, ''));
+  return result;
 }
 
 // Function to fetch and parse data from Google Sheets
